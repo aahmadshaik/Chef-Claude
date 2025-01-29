@@ -7,12 +7,7 @@ import Header from "./components/Header";
 import { ClipLoader } from "react-spinners";
 
 const App = () => {
-  const [ingredients, setIngredients] = useState([
-    "olive oil",
-    "chicken",
-    "onion",
-    "lemons",
-  ]);
+  const [ingredients, setIngredients] = useState([]);
   const [recipe, setRecipe] = useState("");
   const [loading, setLoading] = useState(false);
 
