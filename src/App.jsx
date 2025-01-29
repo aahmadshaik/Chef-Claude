@@ -37,7 +37,7 @@ const App = () => {
     <>
       <Header />
       <main>
-        <form onSubmit={addIngredient} className="add-ingredient-form">
+        <form action={addIngredient} className="add-ingredient-form">
           <input
             type="text"
             placeholder="e.g. oregano"
