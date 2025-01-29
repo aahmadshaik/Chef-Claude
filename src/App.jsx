@@ -23,7 +23,8 @@ const App = () => {
         setLoading(false);
       }, 2000);
     } catch (error) {
-      alert.error("Error fetching recipe:", error);
+      console.log(error);
+      alert("Error fetching recipe:", error);
       setLoading(false);
     }
   };
