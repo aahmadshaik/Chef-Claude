@@ -42,6 +42,7 @@ const App = () => {
             placeholder="e.g. oregano"
             aria-label="Add ingredient"
             name="ingredient"
+            required
           />
           <button type="submit">Add ingredient</button>
         </form>
