@@ -5,6 +5,7 @@ import { getRecipeFromMistral } from "./ai";
 import "./index.css";
 import Header from "./components/Header";
 import { ClipLoader } from "react-spinners";
+import { Instructions } from "./components/Instructions";
 
 const App = () => {
   const [ingredients, setIngredients] = useState([]);
@@ -12,20 +13,17 @@ const App = () => {
   const [loading, setLoading] = useState(false);
 
   const getRecipe = async () => {
-    setLoading(true);
+    setLoading(true); // Start loading as soon as function is called
     try {
       console.log("Fetching AI recipe for:", ingredients);
       const recipeMarkdown = await getRecipeFromMistral(ingredients);
 
-      // Ensure spinner is visible for at least 2 seconds
-      setTimeout(() => {
-        setRecipe(recipeMarkdown);
-        setLoading(false);
-      }, 2000);
+      setRecipe(recipeMarkdown); // Set recipe once the data is fetched
+      setLoading(false); // Stop loading
     } catch (error) {
       console.log(error);
       alert("Error fetching recipe:", error);
-      setLoading(false);
+      setLoading(false); // Stop loading if there is an error
     }
   };
 
@@ -45,12 +43,13 @@ const App = () => {
             aria-label="Add ingredient"
             name="ingredient"
           />
-
           <button type="submit">Add ingredient</button>
         </form>
 
-        {ingredients.length > 0 && (
+        {ingredients.length > 0 ? (
           <IngredientsList ingredients={ingredients} getRecipe={getRecipe} />
+        ) : (
+          <Instructions />
         )}
 
         {loading ? (
