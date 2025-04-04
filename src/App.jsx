@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import IngredientsList from "./components/ingredientsList";
 import ClaudeRecipe from "./components/ClaudeRecipe";
 import { getRecipeFromMistral } from "./ai";
@@ -11,6 +11,20 @@ const App = () => {
   const [ingredients, setIngredients] = useState([]);
   const [recipe, setRecipe] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const recipeSection = useRef(null);
+
+  useEffect(() => {
+    if (recipe && recipeSection.current) {
+      // recipeSection.current.scrollIntoView({ behavior: "smooth" });
+      const yCoord =
+        recipeSection.current.getBoundingClientRect().top + window.scrollY;
+      window.scroll({
+        top: yCoord,
+        behavior: "smooth",
+      });
+    }
+  }, [recipe]);
 
   const getRecipe = async () => {
     setLoading(true); // Start loading as soon as function is called
@@ -48,7 +62,11 @@ const App = () => {
         </form>
 
         {ingredients.length > 0 ? (
-          <IngredientsList ingredients={ingredients} getRecipe={getRecipe} />
+          <IngredientsList
+            ref={recipeSection}
+            ingredients={ingredients}
+            getRecipe={getRecipe}
+          />
         ) : (
           <Instructions />
         )}
