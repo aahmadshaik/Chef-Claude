@@ -16,12 +16,13 @@ const App = () => {
 
   useEffect(() => {
     if (recipe && recipeSection.current) {
-      // recipeSection.current.scrollIntoView({ behavior: "smooth" });
-      const yCoord =
-        recipeSection.current.getBoundingClientRect().top + window.scrollY;
-      window.scroll({
-        top: yCoord,
-        behavior: "smooth",
+      requestAnimationFrame(() => {
+        const yCoord =
+          recipeSection.current.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({
+          top: yCoord,
+          behavior: "smooth",
+        });
       });
     }
   }, [recipe]);
@@ -62,11 +63,7 @@ const App = () => {
         </form>
 
         {ingredients.length > 0 ? (
-          <IngredientsList
-            ref={recipeSection}
-            ingredients={ingredients}
-            getRecipe={getRecipe}
-          />
+          <IngredientsList ingredients={ingredients} getRecipe={getRecipe} />
         ) : (
           <Instructions />
         )}
@@ -77,7 +74,7 @@ const App = () => {
             <p>Loading recipe...</p>
           </div>
         ) : (
-          recipe && <ClaudeRecipe recipe={recipe} />
+          recipe && <ClaudeRecipe ref={recipeSection} recipe={recipe} />
         )}
       </main>
     </>
